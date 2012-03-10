@@ -1,0 +1,49 @@
+// navigare nei prototipi costa! per evitare l'accesso alla stessa proprietà assgno propr = Math.propr;
+var pow = Math.pow;
+var sqrt = Math.sqrt;
+
+/* POINT */
+var Point = function(x,y){
+  this.x = x || 0;
+	this.y = y || 0;
+}
+
+Point.prototype.getDistance = function(point) {
+	var XDistance = this.x - point.x;
+	var YDistance = this.y - point.y;
+	
+	return sqrt(pow(XDistance,2)+pow(YDistance,2));
+};
+
+Point.prototype.translate = function(dx,dy) {
+	this.x += dx;
+	this.y += dy;
+
+	return this;
+};
+
+/* TRIANGLE */
+var Triangle = function (p1,p2,p3){
+	this.p1 = p1;
+	this.p2 = p2;
+	this.p3 = p3;
+
+	this.l1 = p1.getDistance(p2);
+	this.l2 = p1.getDistance(p3);
+	this.l3 = p1.getDistance(p3);
+}
+
+Triangle.prototype.getPerimeter = function() {
+	var perimeter = this.l1+this.l2+this.l3;
+	
+	return perimeter;
+};
+
+Triangle.prototype.getArea = function() {
+	var semiperimeter = this.getPerimeter() / 2;
+	return sqrt(semiperimeter*(semiperimeter - this.l1)*(semiperimeter - this.l2)*(semiperimeter - this.l3));
+};
+
+var p1 = new Point(0,0);
+
+p1.translate(1,2);

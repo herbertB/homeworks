@@ -5,15 +5,15 @@ var numbers = [4,-5,2,-87,4,-65,12,-35,77,0,-41,14];
 
 var sumPositive = function(array){
 	if(typeof(array)=='undefined') {
-			return console.log('insert a valid array');
-				}
-					return array
-							.filter(function(item){
-										return item>0;
-												})
-														.reduce(function(prev,curr){
-																	return prev+curr;
-																			})
-																			};
+		return console.log('insert a valid array');
+	}
+	return array
+		.filter(function(item){
+			return item>0;
+		})
+		.reduce(function(prev,curr){
+			return prev+curr;
+		})
+};
 
-																			var result = sumPositive(numbers);
+var result = sumPositive(numbers);

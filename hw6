@@ -1,0 +1,99 @@
+// navigare nei prototipi costa! per evitare l'accesso alla stessa proprietà assgno propr = Math.propr;
+var pow = Math.pow;
+var sqrt = Math.sqrt;
+var random = Math.random;
+
+/* POINT */
+var Point = function(x,y){
+  this.x = x || 0;
+	this.y = y || 0;
+}
+
+Point.prototype.getDistance = function(point) {
+	var XDistance = this.x - point.x;
+	var YDistance = this.y - point.y;
+	
+	return sqrt(pow(XDistance,2)+pow(YDistance,2));
+};
+
+Point.prototype.translate = function(dx,dy) {
+	this.x += dx;
+	this.y += dy;
+
+	return this;
+};
+
+/* TRIANGLE */
+var Triangle = function (p1,p2,p3){
+	this.p1 = p1;
+	this.p2 = p2;
+	this.p3 = p3;
+
+	this.l1 = p1.getDistance(p2);
+	this.l2 = p1.getDistance(p3);
+	this.l3 = p1.getDistance(p3);
+}
+
+Triangle.prototype.getPerimeter = function() {
+	var perimeter = this.l1+this.l2+this.l3;
+	
+	return perimeter;
+};
+
+Triangle.prototype.getArea = function() {
+	var semiperimeter = this.getPerimeter() / 2;
+	return sqrt(semiperimeter*(semiperimeter - this.l1)*(semiperimeter - this.l2)*(semiperimeter - this.l3));
+};
+
+var p1 = new Point(0,0);
+var p2 = new Point(10,10);
+var p3 = new Point(10,20);
+
+var tri = new Triangle(p1,p2,p3);
+
+tri.getPerimeter();
+tri.getArea();
+
+
+//Scrivi una funzione randomPoint che genera un punto nell'intervallo -100 100 
+var randomPoint = function() {
+	var randomX = random() * 200 - 100;
+	var randomY = random() * 200 - 100;
+	
+	return new Point(randomX,randomY);
+}
+
+// genera n punti random e memorizzali in un array
+var randomPoints = function (n) {
+	var n = n || 1;
+	var randomPoints = new Array(n);
+
+	/* valuta il vantaggio di utilizzare un array creato con new
+	var randomPoints = [];
+	var cont = 0;
+	while(cont<n) {
+		randomPoints.push(randomPoint());
+		cont++;
+	}*/
+
+	for (var i = 0; i < n; i += 1) {
+		randomPoints[i] = randomPoint();
+	}
+	
+	return randomPoints;
+}
+
+
+/* filtrare i punti che giacciono nel semipiano positivo definito da y-x = 0. (punti sopra la bisettrice del I e III quadrante)
+quindi con y - x > 0 */
+var positivePlaneFilter = function(array) {
+	return array
+		.filter(function(item) {
+			// eventuale controllo
+			return item.y - item.x > 0;
+	});
+};
+
+
+var points = randomPoints(100);
+var filteredPoints = positivePlaneFilter(points);
